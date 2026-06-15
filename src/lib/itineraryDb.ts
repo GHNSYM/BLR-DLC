@@ -45,10 +45,6 @@ function softenTrackAccent(accent: string) {
   return SOFT_TRACK_ACCENTS[accent.toLowerCase()] ?? accent
 }
 
-function softenTrackGradient(gradient: string) {
-  return SOFT_TRACK_GRADIENTS[gradient] ?? gradient
-}
-
 function assembleTracks(
   trackRows: DbTrack[],
   dayRows: DbDay[],
@@ -59,7 +55,7 @@ function assembleTracks(
     title: track.title,
     emoji: track.emoji,
     description: track.description,
-    gradient: softenTrackGradient(track.gradient),
+    gradient: track.gradient ?? '',
     accent: softenTrackAccent(track.accent),
     days: dayRows
       .filter((d) => d.track_id === track.id)
@@ -235,7 +231,6 @@ export async function createTrack(
     title: data.title,
     description: data.description,
     emoji: data.emoji ?? preset.emoji,
-    gradient: data.gradient ?? preset.gradient,
     accent: data.accent ?? preset.accent,
     sort_order: count ?? 0,
   })
@@ -246,7 +241,7 @@ export async function createTrack(
 
 export async function updateTrack(
   trackId: string,
-  data: Partial<{ title: string; description: string; emoji: string; gradient: string; accent: string }>,
+  data: Partial<{ title: string; description: string; emoji: string; accent: string }>,
 ) {
   const supabase = getSupabase()
   if (!supabase) throw new Error('Supabase not configured')

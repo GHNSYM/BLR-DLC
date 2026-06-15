@@ -18,7 +18,7 @@ function XPPopup({ amount }: { amount: number }) {
       animate={{ opacity: 0, y: -60, scale: 1.3 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 1.2 }}
-      className="pointer-events-none fixed left-1/2 top-1/3 z-50 font-display text-4xl font-black text-amber-500 drop-shadow-lg"
+      className="pointer-events-none fixed left-1/2 top-1/3 z-50 -translate-x-1/2 whitespace-nowrap font-display text-3xl font-black text-amber-500 drop-shadow-lg"
     >
       +{amount} XP
     </motion.div>
@@ -27,39 +27,14 @@ function XPPopup({ amount }: { amount: number }) {
 
 export default function App() {
   const {
-    trip,
-    tripList,
-    tracks,
-    xp,
-    badges,
-    stats,
-    loading,
-    error,
-    synced,
-    syncing,
-    useDb,
-    uploadingId,
-    notificationPermission,
-    selectTrip,
-    createTrip,
-    updateTripName,
-    deleteTrip,
-    createTrack,
-    updateTrack,
-    deleteTrack,
-    addDay,
-    updateDay,
-    deleteDay,
-    addActivity,
-    updateActivity,
-    removeActivity,
-    toggleActivity,
-    resetProgress,
-    uploadImage,
-    removeImage,
-    clearError,
-    refresh,
-    requestNotifications,
+    trip, tripList, tracks, xp, badges, stats, loading, error,
+    synced, syncing, useDb, uploadingId, notificationPermission,
+    selectTrip, createTrip, updateTripName, deleteTrip,
+    createTrack, updateTrack, deleteTrack,
+    addDay, updateDay, deleteDay,
+    addActivity, updateActivity, removeActivity,
+    toggleActivity, resetProgress, uploadImage, removeImage,
+    clearError, refresh, requestNotifications,
   } = useItinerary()
 
   const { theme, toggleTheme } = useTheme()
@@ -73,10 +48,7 @@ export default function App() {
   const activeTrack = tracks.find((t) => t.id === resolvedTrackId)
 
   const handleToggle = (trackId: string, dayId: string, activityId: string) => {
-    const activity = tracks
-      .flatMap((t) => t.days)
-      .flatMap((d) => d.activities)
-      .find((a) => a.id === activityId)
+    const activity = tracks.flatMap((t) => t.days).flatMap((d) => d.activities).find((a) => a.id === activityId)
     const wasCompleted = activity?.completed
     toggleActivity(trackId, dayId, activityId)
     if (!wasCompleted && activity) {
@@ -113,12 +85,14 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-app text-fg">
+      {/* Ambient blobs */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="ambient-purple absolute -left-32 top-0 h-[480px] w-[480px] rounded-full blur-[100px]" />
-        <div className="ambient-orange absolute -right-32 top-1/4 h-[400px] w-[400px] rounded-full blur-[90px]" />
+        <div className="ambient-purple absolute -left-40 md:-left-32 top-0 h-64 md:h-[480px] w-64 md:w-[480px] rounded-full blur-2xl md:blur-[100px]" />
+        <div className="ambient-orange absolute -right-40 md:-right-32 top-1/4 h-64 md:h-[400px] w-64 md:w-[400px] rounded-full blur-2xl md:blur-[90px]" />
       </div>
 
-      <div className="relative mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
+      <div className="relative mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8 space-y-4 md:space-y-6">
+
         <Header
           trip={trip}
           xp={xp}
@@ -137,8 +111,6 @@ export default function App() {
           onRefresh={refresh}
           onDismissSyncError={clearError}
         />
-  <div className='mt-4 flex items-center gap-2'>
-  </div>
 
         <TripHub
           trips={tripList}
@@ -148,30 +120,41 @@ export default function App() {
           onDelete={deleteTrip}
         />
 
-        {/* Quest progress bar */}
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="panel-subtle mt-4 flex items-center gap-3 rounded-2xl px-4 py-3">
-          <Swords className="h-5 w-5 text-accent" />
+        {/* Progress bar */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="panel-subtle flex items-center gap-3 rounded-xl px-4 py-3"
+        >
+          <Swords className="h-4 w-4 text-accent shrink-0" />
           <div className="flex-1">
             <div className="flex justify-between text-xs">
               <span className="font-semibold text-fg-muted">Campaign Progress</span>
               <span className="font-bold text-accent">{stats.percent}%</span>
             </div>
-            <div className="xp-bar mt-1.5 h-2 overflow-hidden rounded-full">
-              <motion.div className="xp-fill h-full rounded-full" animate={{ width: `${stats.percent}%` }} transition={{ duration: 0.6 }} />
+            <div className="xp-bar mt-1.5 h-1.5 overflow-hidden rounded-full">
+              <motion.div
+                className="xp-fill h-full rounded-full"
+                animate={{ width: `${stats.percent}%` }}
+                transition={{ duration: 0.6 }}
+              />
             </div>
           </div>
         </motion.div>
 
-        <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_260px]">
-          <div className="space-y-6">
+        {/* Main content grid */}
+        <div className="grid gap-4 md:gap-6 md:grid-cols-[1fr_220px]">
+
+          {/* Left: chapters + roadmap */}
+          <div className="space-y-4 md:space-y-6 min-w-0">
             {tracks.length === 0 ? (
-              <div className="panel rounded-3xl py-16 text-center">
-                <Scroll className="mx-auto mb-3 h-12 w-12 text-fg-muted opacity-40" />
+              <div className="panel rounded-xl py-12 px-4 text-center">
+                <Scroll className="mx-auto mb-3 h-10 w-10 text-fg-muted opacity-40" />
                 <p className="font-display text-lg font-bold text-fg">No chapters yet</p>
-                <p className="mt-1 text-sm text-fg-muted">Add a quest chapter to start building your itinerary</p>
+                <p className="mt-1 text-sm text-fg-muted">Add a quest chapter to start building</p>
                 <button
                   onClick={() => createTrack('Chapter 1', 'Your first adventure')}
-                  className="btn-primary mt-6 rounded-2xl px-6 py-2.5 text-sm font-bold text-white"
+                  className="btn-primary mt-5 rounded-xl px-6 py-2.5 text-sm font-bold text-white"
                 >
                   + Add first chapter
                 </button>
@@ -208,23 +191,46 @@ export default function App() {
             )}
           </div>
 
-          <div className="space-y-4 lg:sticky lg:top-6 lg:self-start">
+          {/* Right sidebar — desktop sticky, mobile inline at bottom */}
+          <div className="space-y-3 md:sticky md:top-6 md:self-start">
             <BadgesPanel badges={badges} />
-            <div className="panel rounded-2xl p-4">
-              <h3 className="font-display text-xs font-bold uppercase tracking-[0.15em] text-fg-muted">Stats</h3>
-              <dl className="mt-3 space-y-2.5 text-sm">
-                <div className="flex justify-between"><dt className="text-fg-muted">Quests</dt><dd className="font-bold">{stats.total}</dd></div>
-                <div className="flex justify-between"><dt className="text-fg-muted">Cleared</dt><dd className="font-bold text-emerald-500">{stats.completed}</dd></div>
-                <div className="flex justify-between"><dt className="text-fg-muted">Chapters</dt><dd className="font-bold">{tracks.length}</dd></div>
+
+            {/* Stats */}
+            <div className="panel rounded-xl p-4">
+              <h3 className="font-display text-xs font-bold uppercase tracking-wider text-fg-muted">Stats</h3>
+              <dl className="mt-3 space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <dt className="text-fg-muted">Quests</dt>
+                  <dd className="font-bold">{stats.total}</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-fg-muted">Cleared</dt>
+                  <dd className="font-bold text-emerald-500">{stats.completed}</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-fg-muted">Chapters</dt>
+                  <dd className="font-bold">{tracks.length}</dd>
+                </div>
               </dl>
             </div>
-            <button onClick={() => setShowReset(!showReset)} className="btn-ghost flex w-full items-center justify-center gap-2 rounded-xl py-2 text-xs">
-              <RotateCcw className="h-3 w-3" />Reset all progress
+
+            {/* Reset */}
+            <button
+              onClick={() => setShowReset(!showReset)}
+              className="btn-ghost flex w-full items-center justify-center gap-2 rounded-xl py-2 text-xs"
+            >
+              <RotateCcw className="h-3 w-3" />
+              Reset progress
             </button>
             {showReset && (
               <div className="rounded-xl border border-red-500/30 bg-red-500/5 p-3 text-center text-xs">
-                <p className="text-fg-muted">Unchecks all quests & removes photos. Keeps your itinerary structure.</p>
-                <button onClick={() => { resetProgress(); setShowReset(false) }} className="mt-2 rounded-lg bg-red-500 px-4 py-1.5 font-semibold text-white">Confirm</button>
+                <p className="text-fg-muted">Unchecks all quests & removes photos.</p>
+                <button
+                  onClick={() => { resetProgress(); setShowReset(false) }}
+                  className="mt-2 rounded-lg bg-red-500 px-3 py-1.5 font-semibold text-white"
+                >
+                  Confirm reset
+                </button>
               </div>
             )}
           </div>
@@ -233,7 +239,10 @@ export default function App() {
 
       <Modal open={editTripOpen} onClose={() => setEditTripOpen(false)} title="Rename Trip">
         <FormInput value={tripName} onChange={(e) => setTripName(e.target.value)} />
-        <FormActions onCancel={() => setEditTripOpen(false)} onSubmit={() => { updateTripName(tripName); setEditTripOpen(false) }} />
+        <FormActions
+          onCancel={() => setEditTripOpen(false)}
+          onSubmit={() => { updateTripName(tripName); setEditTripOpen(false) }}
+        />
       </Modal>
 
       <AnimatePresence>{xpPopup && <XPPopup amount={xpPopup} />}</AnimatePresence>

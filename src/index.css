@@ -178,6 +178,7 @@ body {
 
 .quest-node {
   box-shadow: var(--node-glow);
+  /* Remove any min-width/min-height/padding if present */
 }
 
 .ambient-purple { background-color: var(--ambient-purple); }
@@ -258,3 +259,34 @@ body {
 }
 
 .chapter-scroll::-webkit-scrollbar { height: 4px; }
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  /* Ensure touch targets are at least 44x44px for mobile accessibility */
+  button, [role="button"] {
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+    padding: max(8px, (2.75rem - 1lh) / 2) max(8px, (2.75rem - 1em) / 2);
+  }
+
+  /* Better spacing on small screens */
+  .panel {
+    border-radius: 0.5rem;
+  }
+
+  /* Improve readability on mobile */
+  h1, h2, h3, h4, h5, h6 {
+    font-size: clamp(0.875rem, 2.5vw, 1.5rem);
+  }
+
+  /* Better label sizing for mobile */
+  .accent-label {
+    font-size: 0.65rem;
+  }
+
+  /* Reduce button sizes on mobile for better spacing */
+  .btn-primary, .btn-ghost {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+  }
+}

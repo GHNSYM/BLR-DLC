@@ -49,20 +49,21 @@ export function TrackSelector({
   return (
     <>
       <div>
-        <div className="mb-3 flex items-center justify-between">
-          <h3 className="font-display text-sm font-bold uppercase tracking-[0.15em] text-fg-muted">
-            Quest Chapters
+        <div className="mb-2 md:mb-3 flex items-center justify-between">
+          <h3 className="font-display text-xs md:text-xs font-bold uppercase tracking-wider text-fg-muted">
+            Chapters
           </h3>
           <button
             onClick={openCreate}
-            className="flex items-center gap-1 text-xs font-semibold text-accent hover:underline"
+            className="flex items-center gap-0.5 md:gap-1 text-xs md:text-xs font-semibold text-accent hover:underline"
           >
-            <Plus className="h-3.5 w-3.5" />
-            Add chapter
+            <Plus className="h-3 md:h-3.5 w-3 md:w-3.5" />
+            <span className="hidden md:inline">Add chapter</span>
+            <span className="md:hidden">Add</span>
           </button>
         </div>
 
-        <div className="chapter-scroll flex gap-3 overflow-x-auto pt-2 -mx-1 px-1 -mb-2">
+        <div className="chapter-scroll flex gap-2 md:gap-3 overflow-x-auto pt-1.5 md:pt-2 -mx-0.5 px-0.5 -mb-1.5 md:-mb-2">
           {tracks.map((track, i) => {
             const total = track.days.flatMap((d) => d.activities).length
             const done = track.days.flatMap((d) => d.activities).filter((a) => a.completed).length
@@ -76,8 +77,8 @@ export function TrackSelector({
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className={`group relative min-w-[170px] shrink-0 overflow-hidden rounded-2xl border p-4 text-left
-                  transition-all duration-200 hover:-translate-y-1
+                className={`group relative min-w-[140px] md:min-w-[170px] shrink-0 overflow-hidden rounded-lg md:rounded-2xl border p-2.5 md:p-4 text-left
+                  transition-all duration-200 hover:-translate-y-0.5 md:hover:-translate-y-1
                   ${active ? 'track-active' : 'track-idle'}`}
                 style={active
                   ? { borderColor: `${track.accent}70`, boxShadow: `0 0 0 1px ${track.accent}30, 0 4px 20px -4px ${track.accent}30` }
@@ -94,15 +95,15 @@ export function TrackSelector({
 
                 <div className="relative">
                   <div className="flex items-start justify-between">
-                    <span className="text-3xl drop-shadow-sm">{track.emoji}</span>
+                    <span className="text-2xl md:text-3xl drop-shadow-sm">{track.emoji}</span>
                     <div className="flex gap-0.5 opacity-0 transition-opacity group-hover:opacity-100">
                       <span
                         role="button"
                         tabIndex={0}
                         onClick={(e) => { e.stopPropagation(); openEdit(track) }}
-                        className="rounded p-1 text-fg-muted hover:text-accent"
+                        className="rounded p-0.5 md:p-1 text-fg-muted hover:text-accent"
                       >
-                        <Pencil className="h-3 w-3" />
+                        <Pencil className="h-2.5 md:h-3 w-2.5 md:w-3" />
                       </span>
                       <span
                         role="button"
@@ -111,23 +112,23 @@ export function TrackSelector({
                           e.stopPropagation()
                           if (confirm(`Delete chapter "${track.title}"?`)) onDelete(track.id)
                         }}
-                        className="rounded p-1 text-fg-muted hover:text-red-400"
+                        className="rounded p-0.5 md:p-1 text-fg-muted hover:text-red-400"
                       >
-                        <Trash2 className="h-3 w-3" />
+                        <Trash2 className="h-2.5 md:h-3 w-2.5 md:w-3" />
                       </span>
                     </div>
                   </div>
-                  <h3 className="mt-2 font-display text-sm font-bold text-fg">{track.title}</h3>
-                  <p className="mt-0.5 line-clamp-2 text-[11px] text-fg-muted">{track.description}</p>
-                  <div className="mt-3 flex items-center gap-2">
-                    <div className="xp-bar h-1.5 flex-1 overflow-hidden rounded-full">
+                  <h3 className="mt-1.5 md:mt-2 font-display text-xs md:text-sm font-bold text-fg">{track.title}</h3>
+                  <p className="mt-0.5 line-clamp-2 text-[10px] md:text-[11px] text-fg-muted">{track.description}</p>
+                  <div className="mt-2 md:mt-3 flex items-center gap-1.5 md:gap-2">
+                    <div className="xp-bar h-1 md:h-1.5 flex-1 overflow-hidden rounded-full">
                       <motion.div
                         className="h-full rounded-full"
                         style={{ backgroundColor: track.accent }}
                         animate={{ width: `${pct}%` }}
                       />
                     </div>
-                    <span className="text-[10px] font-bold" style={{ color: track.accent }}>{pct}%</span>
+                    <span className="text-[9px] md:text-[10px] font-bold" style={{ color: track.accent }}>{pct}%</span>
                   </div>
                 </div>
               </motion.button>

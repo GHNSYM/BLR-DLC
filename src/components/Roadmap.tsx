@@ -41,25 +41,25 @@ export function Roadmap({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -16 }}
     >
-      <div className="mb-6 flex items-center gap-3">
-        <span className="text-4xl">{track.emoji}</span>
-        <div>
-          <h2 className="font-display text-2xl font-bold text-fg">{track.title}</h2>
-          <p className="text-sm text-fg-muted">{track.description}</p>
+      <div className="mb-4 md:mb-6 flex items-center gap-2 md:gap-3">
+        <span className="text-2xl md:text-4xl">{track.emoji}</span>
+        <div className="min-w-0 flex-1">
+          <h2 className="font-display text-lg md:text-2xl font-bold text-fg">{track.title}</h2>
+          <p className="text-xs md:text-sm text-fg-muted truncate">{track.description}</p>
         </div>
       </div>
 
       {track.days.length === 0 ? (
-        <div className="dashed-btn rounded-2xl py-12 text-center">
-          <MapPin className="mx-auto mb-2 h-8 w-8 text-fg-muted opacity-50" />
-          <p className="text-sm text-fg-muted">No days in this chapter yet</p>
-          <button onClick={() => setShowAddDay(true)} className="mt-3 text-sm font-semibold text-accent hover:underline">
+        <div className="dashed-btn rounded-lg md:rounded-2xl py-8 md:py-12 px-3 md:px-4 text-center">
+          <MapPin className="mx-auto mb-2 h-6 md:h-8 w-6 md:w-8 text-fg-muted opacity-50" />
+          <p className="text-xs md:text-sm text-fg-muted">No days in this chapter yet</p>
+          <button onClick={() => setShowAddDay(true)} className="mt-2 md:mt-3 text-xs md:text-sm font-semibold text-accent hover:underline">
             Add the first day →
           </button>
         </div>
       ) : (
-        <div className="relative space-y-5 pl-4">
-          <div className="roadmap-line absolute left-[11px] top-4 bottom-4 w-0.5" aria-hidden />
+        <div className="relative space-y-3 md:space-y-5 pl-3 md:pl-4">
+          <div className="roadmap-line absolute left-[7px] md:left-[11px] top-4 bottom-4 w-0.5" aria-hidden />
           {track.days.map((day, i) => (
             <motion.div
               key={day.id}

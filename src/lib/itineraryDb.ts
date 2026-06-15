@@ -32,15 +32,6 @@ const SOFT_TRACK_ACCENTS: Record<string, string> = {
   '#ec4899': '#a57b7b',
 }
 
-const SOFT_TRACK_GRADIENTS: Record<string, string> = {
-  'from-orange-500 via-rose-500 to-purple-600': 'from-stone-300 via-emerald-200 to-teal-300',
-  'from-emerald-500 via-teal-500 to-cyan-600': 'from-stone-300 via-emerald-200 to-teal-300',
-  'from-violet-600 via-purple-600 to-indigo-700': 'from-violet-200 via-stone-200 to-emerald-200',
-  'from-sky-500 via-blue-500 to-indigo-600': 'from-teal-200 via-cyan-100 to-slate-300',
-  'from-amber-500 via-yellow-500 to-orange-600': 'from-amber-100 via-stone-200 to-emerald-200',
-  'from-pink-500 via-rose-500 to-red-600': 'from-rose-100 via-stone-200 to-teal-200',
-}
-
 function softenTrackAccent(accent: string) {
   return SOFT_TRACK_ACCENTS[accent.toLowerCase()] ?? accent
 }

@@ -1,0 +1,260 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+  --color-app: var(--app-bg);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --color-fg: var(--text);
+  --color-fg-secondary: var(--text-secondary);
+  --color-fg-muted: var(--text-muted);
+  --color-input: var(--input-bg);
+  --color-track: var(--progress-track);
+  --color-ring: var(--ring-bg);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+}
+
+* { box-sizing: border-box; }
+
+html.dark {
+  color-scheme: dark;
+  --app-bg: #111817;
+  --app-pattern: radial-gradient(circle at 18% 18%, rgba(128, 164, 151, 0.1) 0%, transparent 46%),
+    radial-gradient(circle at 82% 62%, rgba(181, 151, 120, 0.08) 0%, transparent 42%),
+    linear-gradient(180deg, #111817 0%, #17201f 100%);
+  --surface: rgba(239, 246, 243, 0.045);
+  --surface-raised: rgba(239, 246, 243, 0.08);
+  --border: rgba(215, 229, 224, 0.12);
+  --border-subtle: rgba(215, 229, 224, 0.07);
+  --text: #edf5f1;
+  --text-secondary: #b7cbc4;
+  --text-muted: #879a94;
+  --input-bg: rgba(8, 14, 13, 0.44);
+  --ring-bg: #111817;
+  --progress-track: rgba(215, 229, 224, 0.1);
+  --roadmap-line: rgba(128, 164, 151, 0.24);
+  --scrollbar: rgba(215, 229, 224, 0.14);
+  --shimmer-mid: #9bb9ad;
+  --accent: #9bb9ad;
+  --accent-soft: rgba(155, 185, 173, 0.15);
+  --ambient-purple: rgba(136, 127, 169, 0.1);
+  --ambient-orange: rgba(181, 151, 120, 0.09);
+  --ambient-teal: rgba(128, 164, 151, 0.11);
+  --card-shadow: rgba(5, 12, 10, 0.28);
+  --item-idle: rgba(239, 246, 243, 0.035);
+  --item-hover: rgba(239, 246, 243, 0.07);
+  --quest-card: linear-gradient(135deg, rgba(239, 246, 243, 0.065) 0%, rgba(239, 246, 243, 0.025) 100%);
+  --node-glow: 0 0 18px rgba(155, 185, 173, 0.24);
+  --modal-bg: linear-gradient(160deg, #1b2725 0%, #121c1a 100%);
+  --dashed-border: rgba(155, 185, 173, 0.24);
+  --dashed-hover: rgba(155, 185, 173, 0.38);
+  --btn-primary: linear-gradient(135deg, #789b8e 0%, #9f8268 100%);
+}
+
+html.light {
+  color-scheme: light;
+  --app-bg: #f4f1e9;
+  --app-pattern: radial-gradient(circle at 15% 10%, rgba(122, 154, 142, 0.11) 0%, transparent 45%),
+    radial-gradient(circle at 86% 78%, rgba(166, 136, 107, 0.1) 0%, transparent 42%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2397aa9f' fill-opacity='0.10'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  --surface: rgba(255, 253, 248, 0.92);
+  --surface-raised: #fffdf8;
+  --border: rgba(86, 112, 101, 0.16);
+  --border-subtle: rgba(86, 112, 101, 0.09);
+  --text: #28332f;
+  --text-secondary: #50645d;
+  --text-muted: #7f8b83;
+  --input-bg: #fffdf8;
+  --ring-bg: #f4f1e9;
+  --progress-track: rgba(86, 112, 101, 0.12);
+  --roadmap-line: rgba(122, 154, 142, 0.28);
+  --scrollbar: rgba(86, 112, 101, 0.2);
+  --shimmer-mid: #718f84;
+  --accent: #607f73;
+  --accent-soft: rgba(122, 154, 142, 0.15);
+  --ambient-purple: rgba(141, 134, 166, 0.08);
+  --ambient-orange: rgba(166, 136, 107, 0.1);
+  --ambient-teal: rgba(122, 154, 142, 0.12);
+  --card-shadow: rgba(69, 88, 81, 0.14);
+  --item-idle: rgba(255, 253, 248, 0.9);
+  --item-hover: #ffffff;
+  --quest-card: linear-gradient(135deg, #fffdf8 0%, #f2eee4 100%);
+  --node-glow: 0 0 16px rgba(122, 154, 142, 0.28);
+  --modal-bg: linear-gradient(160deg, #fffdf8 0%, #f2eee4 100%);
+  --dashed-border: rgba(86, 112, 101, 0.2);
+  --dashed-hover: rgba(122, 154, 142, 0.34);
+  --btn-primary: linear-gradient(135deg, #789b8e 0%, #a6886b 100%);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--app-bg);
+  background-image: var(--app-pattern);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.4s ease, color 0.3s ease;
+}
+
+#root { min-height: 100vh; }
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 3px; }
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: var(--node-glow); }
+  50% { box-shadow: 0 0 24px rgba(155, 185, 173, 0.38); }
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, var(--text) 0%, var(--shimmer-mid) 50%, var(--text) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+.panel {
+  border: 1px solid var(--border);
+  background: var(--quest-card);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 24px -4px var(--card-shadow);
+  transition: all 0.3s ease;
+}
+
+.panel-subtle {
+  border: 1px solid var(--border-subtle);
+  background: var(--surface);
+  transition: all 0.3s ease;
+}
+
+.quest-card {
+  background: var(--quest-card);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 20px -6px var(--card-shadow);
+}
+
+.quest-modal {
+  background: var(--modal-bg);
+  border: 1px solid var(--border);
+}
+
+.interactive-item {
+  border: 1px solid var(--border);
+  background: var(--item-idle);
+  transition: all 0.2s ease;
+}
+.interactive-item:hover {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  background: var(--item-hover);
+  transform: translateY(-1px);
+}
+
+.dashed-btn {
+  border: 2px dashed var(--dashed-border);
+  transition: all 0.2s ease;
+}
+.dashed-btn:hover {
+  border-color: var(--dashed-hover);
+  background: var(--accent-soft);
+}
+
+.roadmap-line {
+  background: linear-gradient(to bottom, transparent, var(--roadmap-line) 20%, var(--roadmap-line) 80%, transparent);
+}
+
+.quest-node {
+  box-shadow: var(--node-glow);
+}
+
+.ambient-purple { background-color: var(--ambient-purple); }
+.ambient-orange { background-color: var(--ambient-orange); }
+.ambient-teal { background-color: var(--ambient-teal); }
+
+.input-field {
+  border: 1px solid var(--border);
+  background: var(--input-bg);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.input-field:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.input-field::placeholder { color: var(--text-muted); }
+
+.btn-primary {
+  background: var(--btn-primary);
+  transition: opacity 0.2s, transform 0.15s;
+}
+.btn-primary:hover { opacity: 0.92; transform: translateY(-1px); }
+
+.btn-ghost {
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--text); }
+
+.track-active {
+  border-color: var(--accent);
+  background: var(--surface-raised);
+  box-shadow: var(--node-glow);
+}
+.track-idle {
+  border-color: var(--border-subtle);
+  background: var(--item-idle);
+}
+/* Remove the transform from track-idle hover — framer handles it */
+.track-idle:hover {
+  border-color: var(--border);
+  background: var(--item-hover);
+  /* no transform here */
+}
+
+/* Smooth momentum scroll with snap */
+.chapter-scroll {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* hide scrollbar on Firefox */
+  padding-bottom: 4px;
+}
+.chapter-scroll::-webkit-scrollbar { display: none; } /* hide on Chrome/Safari too */
+.chapter-scroll > * {
+  scroll-snap-align: start;
+}
+
+.ring-app { --tw-ring-color: var(--ring-bg); }
+
+.level-badge {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.badge-locked { background: var(--surface); opacity: 0.45; }
+.badge-label { color: var(--text-secondary); }
+.accent-label { color: var(--accent); }
+
+.xp-bar {
+  background: var(--progress-track);
+}
+.xp-fill {
+  background: var(--btn-primary);
+}
+
+.chapter-scroll::-webkit-scrollbar { height: 4px; }
